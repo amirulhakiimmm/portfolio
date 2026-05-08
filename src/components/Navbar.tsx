@@ -20,7 +20,6 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
     { name: "Contact",  href: "#contact" },
   ]
 
-  // ── Scroll spy ────────────────────────────────────────────
   useEffect(() => {
     const sectionIds = navItems.map(item => item.name.toLowerCase())
     const observers: IntersectionObserver[] = []
@@ -39,14 +38,12 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
     return () => observers.forEach(obs => obs.disconnect())
   }, [])
 
-  // ── Add shadow when scrolled ──────────────────────────────
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener("scroll", onScroll)
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  // ── Close on resize ───────────────────────────────────────
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) setIsMenuOpen(false)
@@ -57,7 +54,6 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
 
   return (
     <>
-      {/* ── FIXED WRAPPER ─────────────────────────────────── */}
       <div
         style={{
           position: "fixed",
@@ -66,7 +62,7 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
           right: 0,
           zIndex: 50,
           padding: "0.85rem 1.5rem",
-          pointerEvents: "none",   /* let clicks pass through the wrapper */
+          pointerEvents: "none",   
         }}
       >
         <motion.div
@@ -109,7 +105,6 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
             A.HAKIM
           </div>
 
-          {/* CENTER NAV — desktop */}
           <div
             style={{
               display: "flex",
@@ -158,9 +153,7 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
             })}
           </div>
 
-          {/* RIGHT SIDE */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-            {/* Dark mode toggle */}
             <motion.button
               onClick={toggleDarkMode}
               whileHover={{ scale: 1.08 }}
@@ -192,7 +185,6 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
               </AnimatePresence>
             </motion.button>
 
-            {/* Hamburger — mobile only */}
             <motion.button
               className="mobile-menu-btn"
               onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -203,7 +195,7 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
                 borderRadius: "10px",
                 border: `1px solid ${darkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
                 background: darkMode ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
-                display: "none",   /* shown via CSS below */
+                display: "none",  
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
@@ -216,7 +208,6 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
         </motion.div>
       </div>
 
-      {/* ── MOBILE DROPDOWN ───────────────────────────────── */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
@@ -283,7 +274,6 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
         )}
       </AnimatePresence>
 
-      {/* ── GLOBAL STYLES ─────────────────────────────────── */}
       <style>{`
         /* Reserve space so content isn't hidden under fixed nav */
         body { padding-top: 0; }

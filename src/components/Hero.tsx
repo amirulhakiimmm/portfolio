@@ -1,37 +1,45 @@
-import { motion } from "framer-motion"
-import { MapPin, Briefcase, GraduationCap } from "lucide-react"
-import { useState, useEffect } from "react"
+import { motion } from "framer-motion";
+import { MapPin, Briefcase, GraduationCap } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface HeroProps {
-  darkMode: boolean
+  darkMode: boolean;
 }
 
-const roles = ["Frontend Developer", "Mobile Developer", "Backend Developer", "UI/UX Enthusiast"]
+const roles = [
+  "Frontend Developer",
+  "Mobile App Developer",
+  "Freelance Developer",
+  "Computer Science Graduate",
+];
 
 const Hero = ({ darkMode }: HeroProps) => {
-  const [roleIndex, setRoleIndex] = useState(0)
-  const [displayed, setDisplayed] = useState("")
-  const [deleting, setDeleting] = useState(false)
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const current = roles[roleIndex]
+    const current = roles[roleIndex];
     if (!deleting && displayed.length < current.length) {
-      const t = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 75)
-      return () => clearTimeout(t)
+      const t = setTimeout(
+        () => setDisplayed(current.slice(0, displayed.length + 1)),
+        75,
+      );
+      return () => clearTimeout(t);
     }
     if (!deleting && displayed.length === current.length) {
-      const t = setTimeout(() => setDeleting(true), 2000)
-      return () => clearTimeout(t)
+      const t = setTimeout(() => setDeleting(true), 2000);
+      return () => clearTimeout(t);
     }
     if (deleting && displayed.length > 0) {
-      const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40)
-      return () => clearTimeout(t)
+      const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40);
+      return () => clearTimeout(t);
     }
     if (deleting && displayed.length === 0) {
-      setDeleting(false)
-      setRoleIndex((prev) => (prev + 1) % roles.length)
+      setDeleting(false);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
     }
-  }, [displayed, deleting, roleIndex])
+  }, [displayed, deleting, roleIndex]);
 
   return (
     <section
@@ -45,7 +53,6 @@ const Hero = ({ darkMode }: HeroProps) => {
         padding: "0 2rem",
       }}
     >
-      {/* ── BIG BACKGROUND NAME ── */}
       <div
         style={{
           position: "absolute",
@@ -80,7 +87,6 @@ const Hero = ({ darkMode }: HeroProps) => {
         </motion.span>
       </div>
 
-      {/* ── MAIN 3-COLUMN LAYOUT ── */}
       <div
         style={{
           position: "relative",
@@ -90,12 +96,11 @@ const Hero = ({ darkMode }: HeroProps) => {
           width: "100%",
           display: "grid",
           gridTemplateColumns: "1fr auto 1fr",
-          alignItems: "flex-end",   /* align bottoms so image anchors to baseline */
+          alignItems: "flex-end",
           gap: "2rem",
           paddingBottom: "0",
         }}
       >
-        {/* ── LEFT COLUMN ── */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -104,7 +109,7 @@ const Hero = ({ darkMode }: HeroProps) => {
             display: "flex",
             flexDirection: "column",
             gap: "1.5rem",
-            paddingBottom: "3rem",   /* breathing room above bottom edge */
+            paddingBottom: "3rem",
           }}
         >
           <div>
@@ -155,11 +160,15 @@ const Hero = ({ darkMode }: HeroProps) => {
             </p>
           </div>
 
-          {/* Info pills */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}
+          >
             {[
               { icon: <MapPin size={14} />, text: "Kuala Lumpur, MY" },
-              { icon: <GraduationCap size={14} />, text: "Bachelor Computer Science" },
+              {
+                icon: <GraduationCap size={14} />,
+                text: "Bachelor Computer Science",
+              },
               { icon: <Briefcase size={14} />, text: "Open to Work" },
             ].map(({ icon, text }) => (
               <div
@@ -178,7 +187,6 @@ const Hero = ({ darkMode }: HeroProps) => {
             ))}
           </div>
 
-          {/* Short bio */}
           <p
             style={{
               fontSize: "0.875rem",
@@ -187,11 +195,9 @@ const Hero = ({ darkMode }: HeroProps) => {
               maxWidth: "280px",
             }}
           >
-            Building clean, fast, and beautiful interfaces. Passionate about user experience and modern web technologies.
-          </p>
+Freelance Full Stack Developer and Computer Science graduate, open to work. Building modern web applications systems focused on performance and scalability.          </p>
         </motion.div>
 
-        {/* ── CENTER — PHOTO flush to bottom ── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -200,11 +206,11 @@ const Hero = ({ darkMode }: HeroProps) => {
             display: "flex",
             alignItems: "flex-end",
             justifyContent: "center",
-            /* no bottom padding — image sits on the section floor */
           }}
         >
-          <div style={{ position: "relative", width: "clamp(200px, 24vw, 320px)" }}>
-            {/* Glow blob */}
+          <div
+            style={{ position: "relative", width: "clamp(200px, 24vw, 320px)" }}
+          >
             <div
               style={{
                 position: "absolute",
@@ -222,7 +228,6 @@ const Hero = ({ darkMode }: HeroProps) => {
                 pointerEvents: "none",
               }}
             />
-            {/* Image — no transform offset, just let it sit naturally */}
             <img
               src="/hakim_latest.png"
               alt="Hakim"
@@ -273,7 +278,14 @@ const Hero = ({ darkMode }: HeroProps) => {
                 justifyContent: "flex-end",
               }}
             >
-              {["React", "TypeScript", "Next.js", "Tailwind", "Framer"].map((tech) => (
+              {[
+                "React",
+                "TypeScript",
+                "Tailwind CSS",
+                "Framer Motion",
+                "React Three Fiber",
+                "Vite",
+              ].map((tech) => (
                 <span
                   key={tech}
                   style={{
@@ -295,8 +307,8 @@ const Hero = ({ darkMode }: HeroProps) => {
           {/* Stats */}
           <div style={{ display: "flex", gap: "2rem" }}>
             {[
-              { num: "3+", label: "Projects" },
-              { num: "1+", label: "Years exp" },
+              { num: "Freelance", label: "Available" },
+  { num: "Mobile + Web", label: "Developer" }
             ].map(({ num, label }) => (
               <div key={label} style={{ textAlign: "right" }}>
                 <p
@@ -326,7 +338,14 @@ const Hero = ({ darkMode }: HeroProps) => {
           </div>
 
           {/* CTA buttons */}
-          <div style={{ display: "flex", gap: "0.75rem", flexDirection: "column", alignItems: "flex-end" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.75rem",
+              flexDirection: "column",
+              alignItems: "flex-end",
+            }}
+          >
             <motion.a
               href="#projects"
               whileHover={{ scale: 1.03 }}
@@ -397,7 +416,7 @@ const Hero = ({ darkMode }: HeroProps) => {
         }
       `}</style>
     </section>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

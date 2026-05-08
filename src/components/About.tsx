@@ -1,30 +1,15 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { aboutData } from "../data/portfolioData";
-import { groupSkillsByCategory } from "../controllers/portfolioController";
+import { aboutData } from "../model/portfolioData";
+import { groupSkillsByCategory, getHeroFeed } from "../controllers/portfolioController";
 import Lanyard from "./Lanyard";
+
 
 interface AboutProps {
   darkMode: boolean;
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-
-const breakingItems = [
-  "STRICT MODE ADVOCATE",
-  "POSTGRESQL & REDIS POWER USER",
-  "DOCKER CONTAINER ENTHUSIAST",
-  "TYPE-SAFE EVERYTHING",
-  "OPEN SOURCE CONTRIBUTOR",
-];
-
-const statusItems = [
-  "COMMITS: 312",
-  "CORE WEB VITALS: ALL GREEN",
-  "BUNDLE SIZE: -12% VS LAST SPRINT",
-  "LAST DEPLOY: 2H AGO",
-  "UPTIME: 99.9%",
-];
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -34,19 +19,23 @@ const fadeUp = (delay = 0) => ({
 });
 
 const About = ({ darkMode }: AboutProps) => {
+  const { breakingItems, statusItems } = getHeroFeed();
+
   const skills = groupSkillsByCategory(aboutData.skills);
   const clockRef = useRef<HTMLSpanElement>(null);
+
   return (
     <section
       id="about"
       style={{
-        padding: "7rem 2rem",
+        padding: "7rem 2rem 2rem",
         maxWidth: "1100px",
         margin: "0 auto",
         position: "relative",
         overflow: "hidden",
       }}
     >
+      {/* Live Feed Bar */}
       <div
         style={{
           display: "flex",
@@ -80,13 +69,14 @@ const About = ({ darkMode }: AboutProps) => {
           />
           LIVE PORTFOLIO FEED
         </div>
-        <span>EST. 2024 · FULL-STACK ENGINEER</span>
+        <span>FRESH GRADUATE · FULL STACK DEVELOPER</span>
         <span
           ref={clockRef}
           style={{ color: "var(--accent)", letterSpacing: "0.2em" }}
         />
       </div>
 
+      {/* Breaking Ticker */}
       <div
         style={{
           display: "flex",
@@ -151,7 +141,8 @@ const About = ({ darkMode }: AboutProps) => {
         </div>
       </div>
 
-      <motion.div {...fadeUp(0)}>
+      {/* Heading */}
+      <motion.div {...fadeUp(0)} style={{ marginBottom: "2rem" }}>
         <h2
           style={{
             fontSize: "clamp(2rem, 4vw, 3.2rem)",
@@ -161,34 +152,25 @@ const About = ({ darkMode }: AboutProps) => {
             lineHeight: 1.1,
           }}
         >
-          Crafting digital experiences
+          Turning ideas into functional.
           <br />
-          <span style={{ color: "var(--accent)" }}>with purpose.</span>
+          <span style={{ color: "var(--accent)" }}>application.</span>
         </h2>
       </motion.div>
 
+      {/* Main Grid: Lanyard + Content */}
       <div className="about-grid">
         <motion.div
           {...fadeUp(0.1)}
           style={{
-            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             width: "100%",
-            minHeight: "520px",
             overflow: "visible",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              overflow: "visible",
-            }}
-          >
-            <Lanyard />
-          </div>
+          <Lanyard />
         </motion.div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -270,6 +252,7 @@ const About = ({ darkMode }: AboutProps) => {
         </div>
       </div>
 
+      {/* Skills Ticker */}
       <div style={{ padding: "18px 20px 0" }}>
         {skills.map(({ category, items }, i) => (
           <div
@@ -320,7 +303,7 @@ const About = ({ darkMode }: AboutProps) => {
                         ? "rgba(255,255,255,0.03)"
                         : "rgba(0,0,0,0.03)",
                       fontFamily: "var(--font-mono, monospace)",
-                      flexShrink: 0, 
+                      flexShrink: 0,
                     }}
                   >
                     <span
@@ -340,6 +323,8 @@ const About = ({ darkMode }: AboutProps) => {
           </div>
         ))}
       </div>
+
+      {/* Status Ticker */}
       <div
         style={{
           marginTop: "18px",
@@ -383,7 +368,8 @@ const About = ({ darkMode }: AboutProps) => {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 4rem;
-          align-items: start;
+          align-items: center;
+          margin-top: 2rem;
         }
 
         @media (max-width: 768px) {

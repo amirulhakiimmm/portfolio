@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { ExternalLink, ArrowUpRight } from "lucide-react"
-import { projectsData } from "../data/portfolioData"
+import { projectsData } from "../model/portfolioData"
 import { getFeaturedProject, getSecondaryProjects } from "../controllers/portfolioController"
 
 interface ProjectsProps {

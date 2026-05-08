@@ -75,7 +75,6 @@ function Band() {
   }, [hovered, dragged])
 
   useFrame((state) => {
-    // FIX: only wake up when actively dragging
     if (dragged && card.current) {
       vec.current.set(state.pointer.x, state.pointer.y, 0.5)
       vec.current.unproject(state.camera)
@@ -96,11 +95,9 @@ function Band() {
 
       card.current.setNextKinematicTranslation(target)
 
-      // FIX: wakeUp only inside drag block — never conflicts with sleepAll
       ;[card, j1, j2, j3, fixed].forEach((r) => r.current?.wakeUp())
     }
 
-    // FIX: settle logic only when NOT dragging
     if (!dragged && card.current) {
       const v = card.current.linvel()
       const av = card.current.angvel()
@@ -142,7 +139,7 @@ function Band() {
       }
     }
 
-    // FIX: guard all refs before accessing translation — prevents rope snap on sleep
+    //rope snap on sleep
     if (
       fixed.current &&
       band.current &&
@@ -221,7 +218,7 @@ function Band() {
               />
             </mesh>
 
-            {/* BACK — FIX: offset -0.001 on Z to eliminate z-fighting */}
+            {/* BACK*/}
             <mesh rotation={[0, Math.PI, 0]} position={[0, 0, -0.001]}>
               <planeGeometry args={[1.6, 2.25]} />
               <meshPhysicalMaterial
@@ -235,7 +232,7 @@ function Band() {
         </RigidBody>
       </group>
 
-      {/* ROPE — FIX: depthTest={true} so rope doesn't pop over card */}
+      {/* ROPE*/}
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial

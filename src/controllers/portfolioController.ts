@@ -1,9 +1,8 @@
-// ─────────────────────────────────────────────
-//  CONTROLLER — business logic, no UI here
-// ─────────────────────────────────────────────
 
-import { faqData } from "../data/portfolioData"
-import type { FAQItem } from "../data/portfolioData"
+
+import { faqData } from "../model/portfolioData"
+import type { FAQItem } from "../model/portfolioData"
+import { aboutData } from "../model/portfolioData";
 
 // ── Bot Controller ──────────────────────────
 export interface BotMessage {
@@ -59,13 +58,16 @@ export function groupSkillsByCategory(skills: { category: string; items: string[
     count: s.items.length,
   }))
 }
+export function getHeroFeed() {
+  return aboutData.feed;
+}
 
 // ── Projects Controller ──────────────────────
-export function getFeaturedProject(projects: typeof import("../data/portfolioData").projectsData) {
+export function getFeaturedProject(projects: typeof import("../model/portfolioData").projectsData) {
   return projects.find((p) => p.featured) ?? projects[0]
 }
 
-export function getSecondaryProjects(projects: typeof import("../data/portfolioData").projectsData) {
+export function getSecondaryProjects(projects: typeof import("../model/portfolioData").projectsData) {
   return projects.filter((p) => !p.featured)
 }
 

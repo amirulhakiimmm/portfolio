@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { Send, MapPin, Mail, CheckCircle, AlertCircle } from "lucide-react"
-import { contactData } from "../data/portfolioData"
+import { contactData } from "../model/portfolioData"
 import { validateForm, submitForm } from "../controllers/portfolioController"
 import type { ContactForm, FormStatus } from "../controllers/portfolioController"
 
