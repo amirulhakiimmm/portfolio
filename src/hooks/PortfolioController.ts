@@ -1,9 +1,10 @@
 
 
-import { faqData } from "../data/PortfolioModel"
-import type { FAQItem } from "../data/PortfolioModel"
-import { aboutData } from "../data/PortfolioModel";
+import { faqData } from "../data/Faqdata"
+import type { FAQItem } from "../types/Faqitem"
+import { aboutData } from "../data/Aboutdata";
 import emailjs from "@emailjs/browser"
+import type { Project } from "../types/Project";
 
 const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
@@ -64,11 +65,11 @@ export function getHeroFeed() {
   return aboutData.feed;
 }
 
-export function getFeaturedProject(projects: typeof import("../data/PortfolioModel").projectsData) {
+export function getFeaturedProject(projects: Project[]) {
   return projects.find((p) => p.featured) ?? projects[0]
 }
 
-export function getSecondaryProjects(projects: typeof import("../data/PortfolioModel").projectsData) {
+export function getSecondaryProjects(projects: Project[]) {
   return projects.filter((p) => !p.featured)
 }
 

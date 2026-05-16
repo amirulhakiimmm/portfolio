@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowUpRight, X, ExternalLink, Calendar, Tag, ChevronLeft, ChevronRight } from "lucide-react"
 import { useState, useEffect, useCallback } from "react"
-import type { Project } from "../data/PortfolioModel"
-import { projectsData } from "../data/PortfolioModel"
+import type { Project } from "../types/Project"
+import { projectsData } from "../data/Projectsdata"
 import { getFeaturedProject, getSecondaryProjects } from "../hooks/PortfolioController"
 
 interface ProjectsProps {
