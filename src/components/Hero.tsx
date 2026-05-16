@@ -7,7 +7,7 @@ interface HeroProps {
 }
 
 const roles = [
-  "Frontend Developer",
+  "Full Stack Developer",
   "Mobile App Developer",
   "Freelance Developer",
   "Computer Science Graduate",
@@ -58,12 +58,12 @@ const Hero = ({ darkMode }: HeroProps) => {
           position: "absolute",
           inset: 0,
           display: "flex",
-          alignItems: "center",
+          alignItems: "center", 
           justifyContent: "center",
           pointerEvents: "none",
           zIndex: 0,
           userSelect: "none",
-          transform: "translateY(-26.5%)",
+          transform: "translateY(-25.5%)",
         }}
       >
         <motion.span
@@ -71,14 +71,14 @@ const Hero = ({ darkMode }: HeroProps) => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
           style={{
-            fontSize: "clamp(6rem, 22vw, 20rem)",
+            fontSize: "clamp(5rem, 20vw, 18rem)",
             fontWeight: 900,
             letterSpacing: "-0.04em",
             lineHeight: 1,
-            color: "transparent",
+            color: darkMode ? "rgba(255,255,255,0.025)" : "rgba(0,0,0,0.04)",
             WebkitTextStroke: darkMode
-              ? "0.6px rgba(255,255,255,0.18)"
-              : "1px rgba(0,0,0,0.15)",
+              ? "1.5px rgba(255,255,255,0.15)"
+              : "1.5px rgba(0,0,0,0.10)",
             fontFamily: "'Inter', sans-serif",
             whiteSpace: "nowrap",
           }}
@@ -195,7 +195,9 @@ const Hero = ({ darkMode }: HeroProps) => {
               maxWidth: "280px",
             }}
           >
-Freelance Full Stack Developer and Computer Science graduate, open to work. Building modern web applications systems focused on performance and scalability.          </p>
+            Freelance Full Stack Developer and Computer Science graduate, open
+            to work.{" "}
+          </p>
         </motion.div>
 
         <motion.div
@@ -214,15 +216,15 @@ Freelance Full Stack Developer and Computer Science graduate, open to work. Buil
             <div
               style={{
                 position: "absolute",
-                top: "50%",
-                left: "50%",
+                top: "60%",
+                left: "40%",
                 transform: "translate(-50%, -50%)",
                 width: "152%",
                 height: "140%",
                 borderRadius: "50%",
                 background: darkMode
-                  ? "radial-gradient(ellipse, rgba(99,102,241,0.35) 0%, rgba(59,130,246,0.18) 40%, transparent 70%)"
-                  : "radial-gradient(ellipse, rgba(99,102,241,0.2) 0%, rgba(59,130,246,0.1) 40%, transparent 70%)",
+                  ? "radial-gradient(ellipse, rgba(99,102,241,0.35) 0%, rgba(59,130,246,0.18) 10%, transparent 50%)"
+                  : "radial-gradient(ellipse, rgba(99,102,241,0.2) 0%, rgba(59,130,246,0.1) 40%, transparent 50%)",
                 filter: "blur(28px)",
                 zIndex: 0,
                 pointerEvents: "none",
@@ -279,12 +281,21 @@ Freelance Full Stack Developer and Computer Science graduate, open to work. Buil
               }}
             >
               {[
-                "React",
+                "Laravel",
                 "TypeScript",
-                "Tailwind CSS",
-                "Framer Motion",
-                "React Three Fiber",
+                "PHP",
+                "Flutter",
+                "React",
                 "Vite",
+                "Firebase",
+                "MySQL",
+                "Tailwind CSS",
+                "Node.js",
+                "Git",
+                "Figma",
+                "Postman",
+                "MongoDB",
+                "Express.js",
               ].map((tech) => (
                 <span
                   key={tech}
@@ -308,7 +319,7 @@ Freelance Full Stack Developer and Computer Science graduate, open to work. Buil
           <div style={{ display: "flex", gap: "2rem" }}>
             {[
               { num: "Freelance", label: "Available" },
-  { num: "Mobile + Web", label: "Developer" }
+              { num: "Mobile + Web", label: "Developer" },
             ].map(({ num, label }) => (
               <div key={label} style={{ textAlign: "right" }}>
                 <p
@@ -386,35 +397,35 @@ Freelance Full Stack Developer and Computer Science graduate, open to work. Buil
 
       {/* ── MOBILE LAYOUT ── */}
       <style>{`
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-        @media (max-width: 768px) {
-          #home > div:nth-child(2) {
-            grid-template-columns: 1fr !important;
-            grid-template-rows: auto auto auto;
+          @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
           }
-          #home > div:nth-child(2) > div:first-child {
-            order: 2;
-            align-items: center !important;
-            text-align: center !important;
+          @media (max-width: 768px) {
+            #home > div:nth-child(2) {
+              grid-template-columns: 1fr !important;
+              grid-template-rows: auto auto auto;
+            }
+            #home > div:nth-child(2) > div:first-child {
+              order: 2;
+              align-items: center !important;
+              text-align: center !important;
+            }
+            #home > div:nth-child(2) > div:nth-child(2) {
+              order: 1;
+            }
+            #home > div:nth-child(2) > div:last-child {
+              order: 3;
+              align-items: center !important;
+              text-align: center !important;
+            }
+            #home > div:nth-child(2) > div:last-child * {
+              align-items: center !important;
+              justify-content: center !important;
+              text-align: center !important;
+            }
           }
-          #home > div:nth-child(2) > div:nth-child(2) {
-            order: 1;
-          }
-          #home > div:nth-child(2) > div:last-child {
-            order: 3;
-            align-items: center !important;
-            text-align: center !important;
-          }
-          #home > div:nth-child(2) > div:last-child * {
-            align-items: center !important;
-            justify-content: center !important;
-            text-align: center !important;
-          }
-        }
-      `}</style>
+        `}</style>
     </section>
   );
 };

@@ -1,9 +1,13 @@
 
 
-import { faqData } from "../model/portfolioData"
-import type { FAQItem } from "../model/portfolioData"
-import { aboutData } from "../model/portfolioData";
+import { faqData } from "../data/PortfolioModel"
+import type { FAQItem } from "../data/PortfolioModel"
+import { aboutData } from "../data/PortfolioModel";
+import emailjs from "@emailjs/browser"
 
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 // ── Bot Controller ──────────────────────────
 export interface BotMessage {
   id: string
@@ -15,7 +19,6 @@ export interface BotMessage {
 export function matchFAQ(input: string): string {
   const lower = input.toLowerCase().trim()
 
-  // Find best matching FAQ by keyword count
   let bestMatch: FAQItem | null = null
   let bestScore = 0
 
@@ -29,7 +32,7 @@ export function matchFAQ(input: string): string {
 
   if (bestMatch && bestScore > 0) return bestMatch.answer
 
-  // Fallback
+  
   return "Hmm, I'm not sure about that 🤔 Try asking about Hakim's skills, projects, experience, or how to contact him!"
 }
 
@@ -51,7 +54,6 @@ export function getQuickReplies(): string[] {
   ]
 }
 
-// ── About Controller ────────────────────────
 export function groupSkillsByCategory(skills: { category: string; items: string[] }[]) {
   return skills.map((s) => ({
     ...s,
@@ -62,16 +64,14 @@ export function getHeroFeed() {
   return aboutData.feed;
 }
 
-// ── Projects Controller ──────────────────────
-export function getFeaturedProject(projects: typeof import("../model/portfolioData").projectsData) {
+export function getFeaturedProject(projects: typeof import("../data/PortfolioModel").projectsData) {
   return projects.find((p) => p.featured) ?? projects[0]
 }
 
-export function getSecondaryProjects(projects: typeof import("../model/portfolioData").projectsData) {
+export function getSecondaryProjects(projects: typeof import("../data/PortfolioModel").projectsData) {
   return projects.filter((p) => !p.featured)
 }
 
-// ── Contact Controller ───────────────────────
 export interface ContactForm {
   name: string
   email: string
@@ -89,8 +89,19 @@ export function validateForm(form: ContactForm): string | null {
   return null
 }
 
-export async function submitForm(_form: ContactForm): Promise<void> {
-  // Swap this for your actual API / EmailJS / Resend call
-  await new Promise((res) => setTimeout(res, 1500))
-  // throw new Error("API error") // uncomment to test error state
+export async function submitForm(form: ContactForm): Promise<void> {
+  const result = await emailjs.send(
+    EMAILJS_SERVICE_ID,
+    EMAILJS_TEMPLATE_ID,
+    {
+      from_name:  form.name,
+      from_email: form.email,
+      message:    form.message,
+    },
+    EMAILJS_PUBLIC_KEY
+  )
+
+  if (result.status !== 200) {
+    throw new Error("Failed to send message.")
+  }
 }

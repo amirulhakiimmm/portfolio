@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useRef, useEffect } from "react"
 import { MessageCircle, X, Send, Bot } from "lucide-react"
-import { matchFAQ, createMessage, getQuickReplies } from "../controllers/portfolioController"
-import type { BotMessage } from "../controllers/portfolioController"
+import { matchFAQ, createMessage, getQuickReplies } from "../hooks/PortfolioController"
+import type { BotMessage } from "../hooks/PortfolioController"
 
 interface ChatBotProps {
   darkMode: boolean

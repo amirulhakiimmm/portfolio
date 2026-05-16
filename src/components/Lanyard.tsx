@@ -1,274 +1,163 @@
 'use client'
 
-import * as THREE from "three"
-import { useRef, useState, useEffect } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Environment, Lightformer, useTexture } from "@react-three/drei"
-import {
-  BallCollider,
-  CuboidCollider,
-  Physics,
-  RigidBody,
-  useRopeJoint,
-  useSphericalJoint,
-} from "@react-three/rapier"
+import * as THREE from 'three'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { useTexture, Environment } from '@react-three/drei'
+import { useRef, useState } from 'react'
 
-import { MeshLineGeometry, MeshLineMaterial } from "meshline"
-import { extend } from "@react-three/fiber"
+/* ───────────────── GLASS ID CARD ───────────────── */
 
-extend({ MeshLineGeometry, MeshLineMaterial })
+function Card() {
+  const group = useRef<THREE.Group>(null!)
 
-function Band() {
-  const snapRotation = (value: number) => {
-    const TWO_PI = Math.PI * 2
-    let v = value % TWO_PI
-    if (v < 0) v += TWO_PI
-    const front = 0
-    const back = Math.PI
-    return Math.abs(v - front) < Math.abs(v - back) ? front : back
-  }
+  const texture = useTexture('/hakim.jpeg')
 
-  const sleepAll = () => {
-    j1.current?.sleep()
-    j2.current?.sleep()
-    j3.current?.sleep()
-    card.current?.sleep()
-  }
+  texture.colorSpace = THREE.SRGBColorSpace
+  texture.flipY = true
+  texture.anisotropy = 16
 
-  const lastDragTime = useRef(0)
-  const isResting = useRef(false)
-  const band = useRef<any>(null)
-  const fixed = useRef<any>(null)
-  const j1 = useRef<any>(null)
-  const j2 = useRef<any>(null)
-  const j3 = useRef<any>(null)
-  const card = useRef<any>(null)
+  const [dragging, setDragging] = useState(false)
 
-  const vec = useRef(new THREE.Vector3())
-  const dir = useRef(new THREE.Vector3())
+  const rot = useRef({ x: -0.15, y: 0.4 })
+  const vel = useRef({ x: 0, y: 0.003 })
+  const last = useRef({ x: 0, y: 0 })
 
-  const [dragged, drag] = useState<false | THREE.Vector3>(false)
-  const [hovered, hover] = useState(false)
+  useFrame(() => {
+    if (!dragging) {
+      rot.current.y += vel.current.y
+      rot.current.x += vel.current.x
 
-  const texture = useTexture("/hakim.jpeg")
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+      vel.current.x *= 0.95
+      vel.current.y *= 0.95
 
-  const curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(),
-    new THREE.Vector3(),
-    new THREE.Vector3(),
-    new THREE.Vector3(),
-  ])
-
-  /* joints */
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.85])
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.85])
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.85])
-  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.45, 0]])
-
-  useEffect(() => {
-    document.body.style.cursor = hovered
-      ? dragged
-        ? "grabbing"
-        : "grab"
-      : "auto"
-  }, [hovered, dragged])
-
-  useFrame((state) => {
-    if (dragged && card.current) {
-      vec.current.set(state.pointer.x, state.pointer.y, 0.5)
-      vec.current.unproject(state.camera)
-
-      dir.current.copy(vec.current)
-      dir.current.sub(state.camera.position)
-      dir.current.normalize()
-
-      vec.current.add(
-        dir.current.multiplyScalar(state.camera.position.length())
-      )
-
-      const target = {
-        x: vec.current.x - (dragged as THREE.Vector3).x,
-        y: vec.current.y - (dragged as THREE.Vector3).y,
-        z: vec.current.z - (dragged as THREE.Vector3).z,
-      }
-
-      card.current.setNextKinematicTranslation(target)
-
-      ;[card, j1, j2, j3, fixed].forEach((r) => r.current?.wakeUp())
-    }
-
-    if (!dragged && card.current) {
-      const v = card.current.linvel()
-      const av = card.current.angvel()
-      const rot = card.current.rotation()
-
-      const targetY = snapRotation(rot.y)
-
-      card.current.setAngvel({
-        x: 0,
-        y: (targetY - rot.y) * 6,
-        z: 0,
-      })
-
-      const isStill =
-        Math.abs(v.x) < 0.01 &&
-        Math.abs(v.y) < 0.01 &&
-        Math.abs(v.z) < 0.01 &&
-        Math.abs(av.x) < 0.01 &&
-        Math.abs(av.y) < 0.01 &&
-        Math.abs(av.z) < 0.01
-
-      if (isStill) {
-        const finalRot = card.current.rotation()
-
-        card.current.setLinvel({ x: 0, y: 0, z: 0 }, true)
-        card.current.setAngvel({ x: 0, y: 0, z: 0 }, true)
-
-        card.current.setRotation(
-          {
-            x: finalRot.x,
-            y: snapRotation(finalRot.y),
-            z: finalRot.z,
-            w: finalRot.w,
-          },
-          true
-        )
-
-        sleepAll()
+      if (Math.abs(vel.current.y) < 0.0005) {
+        vel.current.y = 0.002
       }
     }
 
-    //rope snap on sleep
-    if (
-      fixed.current &&
-      band.current &&
-      j1.current &&
-      j2.current &&
-      j3.current
-    ) {
-      curve.points[0].copy(j3.current.translation())
-      curve.points[1].copy(j2.current.translation())
-      curve.points[2].copy(j1.current.translation())
-      curve.points[3].copy(fixed.current.translation())
-
-      band.current.geometry.setPoints(curve.getPoints(24))
+    if (group.current) {
+      group.current.rotation.x = rot.current.x
+      group.current.rotation.y = rot.current.y
     }
   })
 
+  const onDown = (e: any) => {
+    setDragging(true)
+    last.current.x = e.clientX
+    last.current.y = e.clientY
+  }
+
+  const onUp = () => setDragging(false)
+
+  const onMove = (e: any) => {
+    if (!dragging) return
+
+    const dx = e.clientX - last.current.x
+    const dy = e.clientY - last.current.y
+
+    rot.current.y += dx * 0.01
+    rot.current.x += dy * 0.01
+
+    vel.current.y = dx * 0.0008
+    vel.current.x = dy * 0.0008
+
+    last.current.x = e.clientX
+    last.current.y = e.clientY
+  }
+
+  /* ───────────────── MATERIALS ───────────────── */
+
+  const glass = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('#ffffff'),
+    roughness: 0.08,
+    metalness: 0,
+    transmission: 0.85,   // glass effect
+    thickness: 0.6,
+    ior: 1.5,
+    clearcoat: 1,
+    clearcoatRoughness: 0.1,
+  })
+
+  // const photo = new THREE.MeshStandardMaterial({
+  //   map: texture,
+  //   roughness: 0.25,
+  //   metalness: 0,
+  // })
+
+  // const back = new THREE.MeshPhysicalMaterial({
+  //   color: '#f5f5f5',
+  //   roughness: 0.2,
+  //   metalness: 0,
+  //   clearcoat: 1,
+  // })
+
   return (
-    <>
-      <group position={[0, 4, 0]}>
-        <RigidBody ref={fixed} type="fixed" />
+    <group
+      ref={group}
+      onPointerDown={onDown}
+      onPointerUp={onUp}
+      onPointerMove={onMove}
+    >
+      {/* ───────── GLASS BODY ───────── */}
+      <mesh material={glass}>
+        <boxGeometry args={[1.9, 2.6, 0.08]} />
+      </mesh>
 
-        <RigidBody ref={j1} position={[0.25, 0, 0]}>
-          <BallCollider args={[0.1]} />
-        </RigidBody>
-
-        <RigidBody ref={j2} position={[0.5, 0, 0]}>
-          <BallCollider args={[0.1]} />
-        </RigidBody>
-
-        <RigidBody ref={j3} position={[0.7, 0, 0]}>
-          <BallCollider args={[0.1]} />
-        </RigidBody>
-
-        <RigidBody
-          ref={card}
-          position={[2, 0, 0]}
-          type={dragged ? "kinematicPosition" : "dynamic"}
-          linearDamping={8}
-          angularDamping={10}
-        >
-          <CuboidCollider args={[0.8, 1.125, 0.01]} />
-
-          <group
-            scale={1.5}
-            position={[0, -1.2, 0]}
-            onPointerOver={() => hover(true)}
-            onPointerOut={() => hover(false)}
-            onPointerDown={(e) => {
-              const target = e.target as HTMLElement
-              target.setPointerCapture(e.pointerId)
-
-              drag(
-                new THREE.Vector3()
-                  .copy(e.point)
-                  .sub(vec.current.copy(card.current.translation()))
-              )
-
-              isResting.current = false
-            }}
-            onPointerUp={(e) => {
-              const target = e.target as HTMLElement
-              target.releasePointerCapture(e.pointerId)
-
-              drag(false)
-              lastDragTime.current = performance.now()
-            }}
-          >
-            {/* FRONT */}
-            <mesh position={[0, 0, 0.001]}>
-              <planeGeometry args={[1.6, 2.25]} />
-              <meshPhysicalMaterial
-                map={texture}
-                roughness={0.35}
-                metalness={0.15}
-                clearcoat={1}
-              />
-            </mesh>
-
-            {/* BACK*/}
-            <mesh rotation={[0, Math.PI, 0]} position={[0, 0, -0.001]}>
-              <planeGeometry args={[1.6, 2.25]} />
-              <meshPhysicalMaterial
-                map={texture}
-                roughness={0.35}
-                metalness={0.15}
-                clearcoat={1}
-              />
-            </mesh>
-          </group>
-        </RigidBody>
-      </group>
-
-      {/* ROPE*/}
-      <mesh ref={band}>
-        <meshLineGeometry />
-        <meshLineMaterial
-          color="#ffffff"
-          depthTest={true}
-          useMap
+      {/* ───────── FRONT PHOTO ───────── */}
+      <mesh position={[0, 0, 0.041]}>
+        <planeGeometry args={[1.75, 2.45]} />
+        <meshStandardMaterial
           map={texture}
-          repeat={[-3, 1]}
-          lineWidth={1}
+          transparent={true}
         />
       </mesh>
-    </>
+
+      {/* ───────── BACK DESIGN ───────── */}
+      <mesh position={[0, 0, -0.041]} rotation={[0, Math.PI, 0]}>
+        <planeGeometry args={[1.75, 2.45]} />
+        <meshStandardMaterial map={texture} transparent={true} />
+      </mesh>
+
+      {/* ───────── TOP RING ───────── */}
+      <mesh position={[0, 1.35, 0]}>
+        <torusGeometry args={[0.085, 0.02, 20, 40]} />
+        <meshStandardMaterial
+          color="#c0c0c0"
+          metalness={1}
+          roughness={0.1}
+        />
+      </mesh>
+    </group>
   )
 }
 
-function Scene() {
+/* ───────────────── MAIN ───────────────── */
+
+export default function IDCard3D() {
   return (
-    <Physics gravity={[0, -40, 0]} timeStep={1 / 60}>
-      <Band />
-    </Physics>
-  )
-}
+    <div
+      style={{
+        width: '100%',
+        height: '100vh',
+        overflow: 'hidden',
+        background:
+          'radial-gradient(circle at top, #1b1b2f 0%, #0d0d1a 100%)',
+      }}
+    >
+      <Canvas camera={{ position: [0, 0, 5], fov: 35 }}>
+        {/* LIGHTS */}
+        <ambientLight intensity={1.5} />
 
-export default function Lanyard() {
-  return (
-    <div style={{ width: "100%", height: 520 }}>
-      <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
-        <ambientLight intensity={1} />
-        <directionalLight position={[5, 5, 5]} intensity={2} />
-        <directionalLight position={[-5, -5, -5]} intensity={0.5} />
+        <directionalLight position={[5, 5, 5]} intensity={2.5} />
+        <directionalLight position={[-5, 2, -5]} intensity={0.8} />
 
-        <Scene />
+        <spotLight position={[0, 6, 6]} intensity={2.5} />
 
-        <Environment>
-          <Lightformer intensity={2} position={[0, 5, 0]} scale={[10, 10, 1]} />
-        </Environment>
+        {/* CARD */}
+        <Card />
+
+        {/* ENVIRONMENT REFLECTION (glass look) */}
+        <Environment preset="city" />
       </Canvas>
     </div>
   )

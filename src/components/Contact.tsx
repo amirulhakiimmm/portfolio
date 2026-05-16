@@ -1,9 +1,9 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { Send, MapPin, Mail, CheckCircle, AlertCircle } from "lucide-react"
-import { contactData } from "../model/portfolioData"
-import { validateForm, submitForm } from "../controllers/portfolioController"
-import type { ContactForm, FormStatus } from "../controllers/portfolioController"
+import { contactData } from "../data/PortfolioModel"
+import { validateForm, submitForm } from "../hooks/PortfolioController"
+import type { ContactForm, FormStatus } from "../hooks/PortfolioController"
 
 interface ContactProps {
   darkMode: boolean
