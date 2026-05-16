@@ -6,7 +6,6 @@ export interface Project {
   type: string;
   typeColor: string;
   year: string;
-  liveUrl: string;
   githubUrl: string;
   featured: boolean;
   coverImage: string;
