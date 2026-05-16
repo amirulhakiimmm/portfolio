@@ -374,12 +374,7 @@ const About = ({ darkMode }: AboutProps) => {
           }
 
           /* swap lanyard → photo */
-          .lanyard-desktop {
-            display: none !important;
-          }
-          .lanyard-mobile {
-            display: block !important;
-          }
+          
 
           .about-grid > div:first-child > div {
             max-width: 320px !important;
