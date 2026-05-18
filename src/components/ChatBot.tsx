@@ -36,7 +36,6 @@ const ChatBot = ({ darkMode }: ChatBotProps) => {
     setInput("")
     setTyping(true)
 
-    // Simulate bot typing delay
     setTimeout(() => {
       const answer = matchFAQ(trimmed)
       const botMsg = createMessage("bot", answer)
@@ -54,7 +53,6 @@ const ChatBot = ({ darkMode }: ChatBotProps) => {
 
   return (
     <>
-      {/* Floating button */}
       <motion.button
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.93 }}
@@ -106,7 +104,6 @@ const ChatBot = ({ darkMode }: ChatBotProps) => {
         )}
       </motion.button>
 
-      {/* Chat window */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -210,7 +207,6 @@ const ChatBot = ({ darkMode }: ChatBotProps) => {
                 </motion.div>
               ))}
 
-              {/* Typing indicator */}
               {typing && (
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
@@ -245,7 +241,6 @@ const ChatBot = ({ darkMode }: ChatBotProps) => {
                 </motion.div>
               )}
 
-              {/* Quick replies — show only at start */}
               {messages.length === 1 && !typing && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginTop: "0.5rem" }}>
                   {quickReplies.map((qr) => (
@@ -283,8 +278,6 @@ const ChatBot = ({ darkMode }: ChatBotProps) => {
 
               <div ref={bottomRef} />
             </div>
-
-            {/* Input */}
             <div
               style={{
                 padding: "0.75rem 1rem",

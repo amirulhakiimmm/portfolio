@@ -18,10 +18,7 @@ const ScrollNavigator = ({ darkMode = true }: ScrollNavigatorProps) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Focal line = 40% down the viewport.
-      // The active section is the LAST one whose top edge has crossed
-      // above that line — so a tall Projects section stays active even
-      // when Contact is starting to peek in at the bottom.
+     
       const focalY = window.innerHeight * 0.85
 
       let best = 0
@@ -67,7 +64,6 @@ const ScrollNavigator = ({ darkMode = true }: ScrollNavigatorProps) => {
           alignItems: "flex-end",
         }}
       >
-        {/* Dots */}
         <div
           style={{
             display: "flex",
@@ -138,7 +134,6 @@ const ScrollNavigator = ({ darkMode = true }: ScrollNavigatorProps) => {
           })}
         </div>
 
-        {/* Circle progress button */}
         <button
           onClick={handleClick}
           onMouseEnter={() => setHovered(true)}

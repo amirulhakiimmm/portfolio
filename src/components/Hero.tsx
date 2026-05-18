@@ -294,7 +294,6 @@ const Hero = ({ darkMode }: HeroProps) => {
                 "Git",
                 "Figma",
                 "Postman",
-                "MongoDB",
                 "Express.js",
               ].map((tech) => (
                 <span
@@ -315,7 +314,6 @@ const Hero = ({ darkMode }: HeroProps) => {
             </div>
           </div>
 
-          {/* Stats */}
           <div style={{ display: "flex", gap: "2rem" }}>
             {[
               { num: "Freelance", label: "Available" },
@@ -348,7 +346,6 @@ const Hero = ({ darkMode }: HeroProps) => {
             ))}
           </div>
 
-          {/* CTA buttons */}
           <div
             style={{
               display: "flex",
@@ -395,7 +392,6 @@ const Hero = ({ darkMode }: HeroProps) => {
         </motion.div>
       </div>
 
-      {/* ── MOBILE LAYOUT ── */}
       <style>{`
           @keyframes blink {
             0%, 100% { opacity: 1; }

@@ -1,7 +1,7 @@
 import type { FAQItem } from "../types/Faqitem";
 
 export const faqData: FAQItem[] = [
-  // ── Greetings ──────────────────────────────────────────────────────────────
+  //  Greetings 
   {
     keywords: ["hi", "hello", "hey", "sup", "salam", "assalamualaikum", "asalam", "howdy", "greetings", "yo"],
     question: "Hi there!",
@@ -9,7 +9,7 @@ export const faqData: FAQItem[] = [
       "Hey! 👋 I'm Hakim's portfolio assistant. Feel free to ask about his skills, projects, internship experience, or how to get in touch!",
   },
 
-  // ── About / Identity ───────────────────────────────────────────────────────
+  // About / Identity
   {
     keywords: ["who", "about", "yourself", "introduce", "hakim", "person", "background", "bio"],
     question: "Who is Hakim?",
@@ -41,7 +41,7 @@ export const faqData: FAQItem[] = [
       "Hakim aspires to grow into a well-rounded software engineer, contributing to impactful products and eventually leading development teams. He's passionate about building scalable, user-friendly applications that solve real-world problems.",
   },
 
-  // ── Location ───────────────────────────────────────────────────────────────
+  // Location 
   {
     keywords: ["location", "where", "based", "country", "kl", "malaysia", "city", "live"],
     question: "Where is he based?",
@@ -55,7 +55,7 @@ export const faqData: FAQItem[] = [
       "Yes! Hakim is open to remote work, hybrid arrangements, and relocation opportunities depending on the role. He's flexible and adaptable to different working environments.",
   },
 
-  // ── Education ──────────────────────────────────────────────────────────────
+  // Education 
   {
     keywords: ["education", "degree", "study", "university", "college", "uthm", "graduate", "qualification", "academic"],
     question: "What's his educational background?",
@@ -75,7 +75,7 @@ export const faqData: FAQItem[] = [
       "He studied Computer Science at UTHM, covering subjects such as software engineering, data structures, algorithms, database systems, web development, mobile development, networking, and computer architecture.",
   },
 
-  // ── Skills & Tech Stack ────────────────────────────────────────────────────
+  // Skills & Tech Stack
   {
     keywords: ["skill", "tech", "stack", "know", "language", "framework", "technology", "tools"],
     question: "What are his skills?",
@@ -131,19 +131,14 @@ export const faqData: FAQItem[] = [
       "Yes! During his internship and personal projects, Hakim gained hands-on experience with system testing, debugging, and quality assurance processes. He focuses on writing clean, maintainable code to minimize bugs from the ground up.",
   },
 
-  // ── Projects ───────────────────────────────────────────────────────────────
+  // Projects 
   {
     keywords: ["project", "work", "built", "portfolio", "app", "develop", "create", "make"],
     question: "What projects has he built?",
     answer:
-      "Hakim has developed several academic and personal projects including web systems, mobile applications, e-commerce platforms, and queue management systems. He also created modern portfolio websites and Firebase-integrated applications.",
+      "Hakim has developed several academic and personal projects including web systems, mobile applications and queue management systems. He also created modern portfolio websites and Firebase-integrated applications.",
   },
-  {
-    keywords: ["ecommerce", "e-commerce", "shop", "store", "shopping", "online", "sell"],
-    question: "Has he built e-commerce projects?",
-    answer:
-      "Yes! Hakim has developed e-commerce platforms with product listings, cart functionality, order management, and payment flow integrations, applying both frontend and backend skills.",
-  },
+  
   {
     keywords: ["firebase", "realtime", "authentication", "auth", "login", "signup", "firestore"],
     question: "Has he worked with Firebase?",
@@ -183,7 +178,7 @@ export const faqData: FAQItem[] = [
       "Absolutely! Hakim has collaborated in team environments during his internship and academic projects. He's experienced with Agile-style workflows, team communication, using Git for collaboration, and contributing effectively to shared codebases.",
   },
 
-  // ── Availability & Opportunities ───────────────────────────────────────────
+  // Availability & Opportunities
   {
     keywords: ["hire", "available", "freelance", "work", "open", "job", "opportunity", "recruit", "position", "vacancy"],
     question: "Is he available for opportunities?",
@@ -203,7 +198,7 @@ export const faqData: FAQItem[] = [
       "Hakim is currently available and can start relatively soon depending on the opportunity. Reach out via the Contact section to discuss timelines! 📅",
   },
 
-  // ── Contact ────────────────────────────────────────────────────────────────
+  // Contact
   {
     keywords: ["contact", "email", "reach", "message", "dm", "connect", "get in touch"],
     question: "How do I contact him?",
@@ -229,7 +224,7 @@ export const faqData: FAQItem[] = [
       "Yes! Hakim's resume/CV is available for download from this portfolio. Look for the download button in the hero or contact section. 📄",
   },
 
-  // ── This Portfolio / Assistant ─────────────────────────────────────────────
+  // This Portfolio / Assistant 
   {
     keywords: ["what can you do", "help", "assist", "what do you know", "ask", "question", "capability"],
     question: "What can I ask you?",

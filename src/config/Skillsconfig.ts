@@ -35,7 +35,6 @@ export const SKILL_ICON: Record<string, string> = {
   GitHub: "ti-brand-github",
   Figma: "ti-brand-figma",
   "VS Code": "ti-brand-vscode",
-  Docker: "ti-brand-docker",
   "GitHub Actions": "ti-git-merge",
   Vercel: "ti-triangle",
   Netlify: "ti-topology-ring",

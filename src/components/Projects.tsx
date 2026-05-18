@@ -18,7 +18,6 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.7, delay, ease: EASE },
 })
 
-// ─── Modal ────────────────────────────────────────────────────────────────────
 const ProjectModal = ({
   project,
   darkMode,
@@ -88,7 +87,6 @@ const ProjectModal = ({
           scrollbarWidth: "none",
         }}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           style={{
@@ -103,7 +101,6 @@ const ProjectModal = ({
           <X size={16} />
         </button>
 
-        {/* Image gallery */}
         <div className="modal-gallery" style={{ position: "relative", background: "#0a0a14", overflow: "hidden" }}>
           <AnimatePresence mode="wait">
             <motion.img
@@ -144,7 +141,6 @@ const ProjectModal = ({
           </div>
         </div>
 
-        {/* Thumbnail strip */}
         <div style={{ display: "flex", gap: "0.5rem", padding: "0.75rem 1.25rem", overflowX: "auto", scrollbarWidth: "none" }}>
           {images.map((img, i) => (
             <button key={i} onClick={() => setActiveImg(i)} style={{ flexShrink: 0, width: "64px", height: "44px", borderRadius: "8px", overflow: "hidden", border: i === activeImg ? `2px solid ${project.typeColor}` : "2px solid transparent", cursor: "pointer", padding: 0, transition: "border-color 0.2s" }}>
@@ -153,9 +149,7 @@ const ProjectModal = ({
           ))}
         </div>
 
-        {/* Content */}
         <div className="modal-content-pad">
-          {/* Header */}
           <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "1.25rem", flexWrap: "wrap", gap: "0.75rem" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
@@ -181,7 +175,6 @@ const ProjectModal = ({
             </motion.a>
           </div>
 
-          {/* Meta row */}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", padding: "1rem", borderRadius: "12px", background: darkMode ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)", border: "1px solid var(--border)", marginBottom: "1.5rem" }}>
             {[
               { label: "Role", value: project.role },
@@ -195,12 +188,10 @@ const ProjectModal = ({
             ))}
           </div>
 
-          {/* Description */}
           <p style={{ fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.85, margin: "0 0 1.75rem" }}>
             {project.longDescription}
           </p>
 
-          {/* Highlights */}
           {project.highlights?.length > 0 && (
             <div>
               <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: project.typeColor, marginBottom: "0.75rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -218,7 +209,6 @@ const ProjectModal = ({
             </div>
           )}
 
-          {/* Tags */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginTop: "1.5rem" }}>
             <Tag size={13} style={{ color: "var(--muted)", marginTop: "2px" }} />
             {project.tags.map((tag) => (
@@ -233,14 +223,12 @@ const ProjectModal = ({
   )
 }
 
-// ─── GitHub icon ──────────────────────────────────────────────────────────────
 const GithubIcon = ({ size = 15 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
   </svg>
 )
 
-// ─── Projects section ─────────────────────────────────────────────────────────
 const Projects = ({ darkMode }: ProjectsProps) => {
   const featured = getFeaturedProject(projectsData)
   const secondary = getSecondaryProjects(projectsData)
@@ -257,7 +245,6 @@ const Projects = ({ darkMode }: ProjectsProps) => {
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
 
-        {/* Section label */}
         <motion.div {...fadeUp(0)} style={{ marginBottom: "3rem" }}>
           <p style={{ fontSize: "0.72rem", letterSpacing: "0.22em", color: "var(--accent)", textTransform: "uppercase", display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
             <span style={{ display: "inline-block", width: "28px", height: "1px", background: "var(--accent)" }} />
@@ -268,7 +255,6 @@ const Projects = ({ darkMode }: ProjectsProps) => {
           </h2>
         </motion.div>
 
-        {/* ── Featured card ── */}
         <motion.div
           {...fadeUp(0.1)}
           onClick={() => setSelectedProject(featured)}
@@ -278,7 +264,6 @@ const Projects = ({ darkMode }: ProjectsProps) => {
             position: "relative", overflow: "hidden", cursor: "pointer",
           }}
         >
-          {/* Cover image */}
           <div className="cover-img-wrap cover-img-wrap--featured" style={{ position: "relative", overflow: "hidden" }}>
             <img src={featured.coverImage} alt={featured.title} className="cover-img" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, transparent 30%, ${darkMode ? "#1a1b3a" : "#f8f8ff"} 100%)`, pointerEvents: "none" }} />
@@ -292,16 +277,13 @@ const Projects = ({ darkMode }: ProjectsProps) => {
             </div>
           </div>
 
-          {/* Card body — stacks vertically on mobile */}
           <div className="featured-body">
-            {/* Meta row */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.6rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ fontSize: "0.78rem", color: "var(--muted)" }}>{featured.year}</span>
                 <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "var(--muted)" }} />
                 <span style={{ fontSize: "0.78rem", color: "var(--muted)" }}>{featured.duration}</span>
               </div>
-              {/* GitHub icon — top right on mobile instead of awkward column */}
               <motion.a
                 href={featured.githubUrl}
                 onClick={(e) => e.stopPropagation()}
@@ -326,14 +308,12 @@ const Projects = ({ darkMode }: ProjectsProps) => {
               ))}
             </div>
 
-            {/* Tap hint — inline under tags, not a floating column */}
             <p style={{ marginTop: "1rem", marginBottom: 0, fontSize: "0.68rem", color: "var(--muted)", letterSpacing: "0.08em", opacity: 0.6 }}>
               Tap to explore →
             </p>
           </div>
         </motion.div>
 
-        {/* ── Secondary grid ── */}
         <div className="secondary-grid">
           {secondary.map((project, i) => (
             <motion.div
@@ -345,7 +325,7 @@ const Projects = ({ darkMode }: ProjectsProps) => {
                 borderRadius: "16px", position: "relative", overflow: "hidden", cursor: "pointer",
               }}
             >
-              {/* Cover image */}
+              
               <div className="cover-img-wrap cover-img-wrap--secondary" style={{ position: "relative", overflow: "hidden" }}>
                 <img src={project.coverImage} alt={project.title} className="cover-img" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, transparent 40%, ${darkMode ? "#1a1b3a" : "#f8f8ff"} 100%)`, pointerEvents: "none" }} />
@@ -354,7 +334,6 @@ const Projects = ({ darkMode }: ProjectsProps) => {
                 </span>
               </div>
 
-              {/* Card body */}
               <div style={{ padding: "1.1rem 1.25rem 1.5rem", position: "relative" }}>
                 <div style={{ position: "absolute", top: 0, right: 0, width: "120px", height: "120px", borderRadius: "50%", background: `radial-gradient(circle, ${project.typeColor}10 0%, transparent 70%)`, transform: "translate(30%, -30%)", pointerEvents: "none" }} />
 
@@ -384,7 +363,6 @@ const Projects = ({ darkMode }: ProjectsProps) => {
         </div>
       </div>
 
-      {/* Modal */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal project={selectedProject} darkMode={darkMode} onClose={() => setSelectedProject(null)} />

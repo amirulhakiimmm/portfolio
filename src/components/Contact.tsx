@@ -18,7 +18,6 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.7, delay, ease: EASE },
 })
 
-// Inline SVGs — no lucide dependency for these icons
 const iconMap: Record<string, React.ReactNode> = {
   GitHub: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -82,7 +81,6 @@ const Contact = (_: ContactProps) => {
       style={{ padding: "7rem 2rem", position: "relative" }}
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        {/* Section label */}
         <motion.div {...fadeUp(0)} style={{ marginBottom: "3.5rem" }}>
           <p
             style={{
@@ -113,16 +111,13 @@ const Contact = (_: ContactProps) => {
           </h2>
         </motion.div>
 
-        {/* Two-column layout */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "4rem", alignItems: "start" }}>
           
-          {/* LEFT — info */}
           <motion.div {...fadeUp(0.1)} style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
             <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8 }}>
               I'm currently open to full-time roles, freelance projects, and interesting collaborations. If you have a project in mind or just want to say hi — my inbox is always open.
             </p>
 
-            {/* Contact info */}
             <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "var(--muted)", fontSize: "0.875rem" }}>
                 <span
@@ -166,7 +161,6 @@ const Contact = (_: ContactProps) => {
               </div>
             </div>
 
-            {/* Social links */}
             <div>
               <p style={{ fontSize: "0.72rem", letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase", marginBottom: "0.75rem" }}>
                 Find me on
