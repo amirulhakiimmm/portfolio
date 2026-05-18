@@ -86,7 +86,6 @@ export const aboutData = {
         "GitHub",
         "Figma",
         "VS Code",
-        "Docker",
         "GitHub Actions",
         "Vercel",
         "Netlify",
